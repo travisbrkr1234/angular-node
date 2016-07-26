@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>Recipes</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="recipeCtrl">
+		<h2>Recipes:</h2>
+		<ul>
+			<li ng-repeat="(key, data) in myData">
+				{{ key }}
+				<ul>
+					<li>
+						{{ data.ingredient }}: {{ data.amount }}
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+	</div>
+
+	<script>
+	var app = angular.module('myApp', []);
+	app.controller('recipeCtrl', function($scope, $http) {
+		$http.get("http://localhost:3000/?callback=JSON_CALLBACK").then(function(response) {
+			$scope.myData = response.data;
+		});
+	});
+	</script>
+</body>
+</html>
