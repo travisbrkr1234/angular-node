@@ -1,31 +1,119 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Recipes</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
-</head>
-<body>
-	<div ng-app="myApp" ng-controller="recipeCtrl">
-		<h2>Recipes:</h2>
-		<ul>
-			<li ng-repeat="(key, data) in myData">
-				{{ key }}
-				<ul>
-					<li>
-						{{ data.ingredient }}: {{ data.amount }}
-					</li>
-				</ul>
-			</li>
-		</ul>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body ng-cloak ng-app="recipeBuilder" ng-controller="recipe">
 
-	</div>
+  <form ng-submit="addRecipe()">
+    <input ng-model="recipe.name" type="text" name="name" value="" placeholder="Recipe name">
+    <button ng-click="addIngredient()" type="button" name="button">+ Ingredient</button>
 
-	<script>
-	var app = angular.module('myApp', []);
-	app.controller('recipeCtrl', function($scope, $http) {
-		$http.get("http://localhost:3000/?callback=JSON_CALLBACK").then(function(response) {
-			$scope.myData = response.data;
-		});
-	});
-	</script>
+    <section class="ingredients">
+
+      <section ng-repeat="newIngredient in ingredients">
+          <input ng-model="newIngredient.name" type="text" placeholder="Ingredient"/>
+          <input ng-model="newIngredient.amount" type="number" placeholder="amount"/>
+
+          <select ng-model="newIngredient.measure" class="measure" name="measure">
+            <option value="ounce(s)" selected="selected">ounce(s)</option>
+            <option value="pinch(s)">pinch(s)</option>
+            <option value="dash(s)">dash(s)</option>
+            <option value="teaspoon(s)">teaspoon(s)	</option>
+            <option value="Tablespoon(s)">Tablespoon(s)</option>
+            <option value="scoop(s)">scoop(s)</option>
+            <option value="cup(s)">cup(s)</option>
+            <option value="quart(s)">quart(s)</option>
+            <option value="liter(s)">liter(s)</option>
+            <option value="gallon(s)">gallon(s)</option>
+            <option value="lb(s)">lb(s)</option>
+            <option value="box(s)">box(s)</option>
+            <option value="pkg(s)">pkg(s)</option>
+          </select>
+          <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+      </section>
+
+    </section>
+    <input type="submit" name="name" value="Add Recipe">
+  </form>
+
+<section>
+  <h1>Recipes</h1>
+  <ul>
+    <li ng-repeat="recipe in recipes">
+      <h1>{{recipe.name}}</h1>
+      <div ng-repeat="ingredient in recipe.ingredients">
+        <p>
+          {{ingredient.name}} {{ingredient.amount}} {{ingredient.measure}}
+        </p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+  <script>
+  var app = angular.module('recipeBuilder', []);
+  app.controller('recipe', function($scope) {
+    $scope.ingredients = [];
+
+    $scope.addRecipe = function() {
+      $scope.recipes.push({
+        name: $scope.recipe.name,
+        ingredients: $scope.ingredients
+      });
+
+        $scope.recipe.name = "";
+        $scope.ingredients = [];
+    }
+
+    $scope.addIngredient = function() {
+      var newIngredientId = $scope.ingredients.length+1;
+      $scope.ingredients.push({'id': + newIngredientId});
+    }
+
+    $scope.removeChoice = function() {
+     var lastItem = $scope.ingredients.length-1;
+     $scope.ingredients.splice(lastItem);
+    };
+
+    $scope.recipes = [
+  {
+    "id": 1,
+    "name": "Lasagna",
+    "ingredients": [
+      {
+        "id": 1,
+        "name": "Cheese",
+        "amount": 1,
+        "measure": "lb(s)"
+      },
+      {
+        "id": 2,
+        "name": "Sauce",
+        "amount": 1,
+        "measure": "pkg"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Pizza",
+    "ingredients": [
+      {
+        "id": 1,
+        "name": "Cheese",
+        "amount": 3,
+        "measure": "lb(s)"
+      },
+      {
+        "id": 2,
+        "name": "Sauce",
+        "amount": 1,
+        "measure": "pkg"
+      }
+    ]
+  }
+]
+  });
+  </script>
+
 </body>
 </html>
