@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<body ng-app="recipeBuilder" ng-controller="recipe">
+<body ng-cloak ng-app="recipeBuilder" ng-controller="recipe">
 
   <form ng-submit="addRecipe()">
     <input ng-model="recipe.name" type="text" name="name" value="" placeholder="Name">
     <button ng-click="addIngredient()" type="button" name="button">+ Ingredient</button>
+
     <section class="ingredients">
 
       <section ng-repeat="newIngredient in ingredients">
         <span>id: {{newIngredient.id}}</span>
-          <input ng-model="newIngredient.ingredient" type="text" placeholder="Ingredient"/>
+          <input ng-model="newIngredient.name" type="text" placeholder="Ingredient"/>
           <input ng-model="newIngredient.amount" type="number" placeholder="amount"/>
 
           <select ng-model="newIngredient.measure" class="measure" name="measure">
@@ -35,8 +36,6 @@
     <input type="submit" name="name" value="Add Recipe">
   </form>
 
-
-
 <section>
   <h1>Recipes</h1>
   <ul>
@@ -59,7 +58,11 @@
     $scope.addRecipe = function() {
       $scope.recipes.push({
         name: $scope.recipe.name,
+        ingredients: $scope.ingredients
       });
+
+        $scope.recipe.name = "";
+        $scope.ingredients = [];
     }
 
     $scope.addIngredient = function() {
@@ -68,10 +71,9 @@
     }
 
     $scope.removeChoice = function() {
-      var lastItem = $scope.ingredients.length-1;
-      $scope.ingredients.splice(lastItem);
+     var lastItem = $scope.ingredients.length-1;
+     $scope.ingredients.splice(lastItem);
     };
-
 
     $scope.recipes = [
   {
