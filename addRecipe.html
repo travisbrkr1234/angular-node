@@ -4,13 +4,12 @@
 <body ng-cloak ng-app="recipeBuilder" ng-controller="recipe">
 
   <form ng-submit="addRecipe()">
-    <input ng-model="recipe.name" type="text" name="name" value="" placeholder="Name">
+    <input ng-model="recipe.name" type="text" name="name" value="" placeholder="Recipe name">
     <button ng-click="addIngredient()" type="button" name="button">+ Ingredient</button>
 
     <section class="ingredients">
 
       <section ng-repeat="newIngredient in ingredients">
-        <span>id: {{newIngredient.id}}</span>
           <input ng-model="newIngredient.name" type="text" placeholder="Ingredient"/>
           <input ng-model="newIngredient.amount" type="number" placeholder="amount"/>
 
