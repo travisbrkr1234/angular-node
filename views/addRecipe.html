@@ -57,7 +57,6 @@
     $http.get("/file").then(function(response) {
       $scope.recipes = response.data;
     });
-
     $scope.ingredients = [];
 
     $scope.addRecipe = function() {
@@ -91,45 +90,6 @@
       $scope.ingredients.splice(lastItem);
     };
 
-
-    //     $scope.recipes = [
-    //   {
-    //     "id": 1,
-    //     "name": "Lasagna",
-    //     "ingredients": [
-    //       {
-    //         "id": 1,
-    //         "name": "Cheese",
-    //         "amount": 1,
-    //         "measure": "lb(s)"
-    //       },
-    //       {
-    //         "id": 2,
-    //         "name": "Sauce",
-    //         "amount": 1,
-    //         "measure": "pkg"
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     "id": 3,
-    //     "name": "Pizza",
-    //     "ingredients": [
-    //       {
-    //         "id": 1,
-    //         "name": "Cheese",
-    //         "amount": 3,
-    //         "measure": "lb(s)"
-    //       },
-    //       {
-    //         "id": 2,
-    //         "name": "Sauce",
-    //         "amount": 1,
-    //         "measure": "pkg"
-    //       }
-    //     ]
-    //   }
-    // ]
   });
   </script>
 
