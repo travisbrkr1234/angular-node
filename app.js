@@ -60,11 +60,6 @@ app.post('/addRecipe', function(req, res) {
   console.log(ip);
   console.log('request method: ' + req.method)
   console.log(req.body);
-  // pool.getConnection(function(err, connection) {
-  //   connection.query( 'INSERT INTO recipe VALUES (?,?,?,?) ' + connection.escape(user_id), function(err, rows) {
-  //     connection.release()
-  //     res.send(rows)
-  //   })
-  // })
+  //TODO insert into database
   res.send('200 OK')
 })
