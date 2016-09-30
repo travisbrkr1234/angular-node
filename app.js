@@ -13,11 +13,12 @@ const port = 8082
 
 //mysqlStuff
 const mysql      = require('mysql')
+const mysqlconfig = require('./mysqlconfig')
 const pool = mysql.createPool({
-  host     : '****',
-  user     : '****',
-  password : '****',
-  database : '****'
+  host     : mysqlconfig.host,
+  user     : mysqlconfig.user,
+  password : mysqlconfig.password,
+  database : mysqlconfig.database
 })
 
 app.use('/', express.static(__dirname + '/views'))
