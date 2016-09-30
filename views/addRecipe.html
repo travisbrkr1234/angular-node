@@ -54,13 +54,24 @@
   app.controller('recipe', function($scope, $http) {
 
     /*Get the uh recipes*/
-    $http.get("http://localhost:8082/file").then(function(response) {
+    $http.get("/file").then(function(response) {
       $scope.recipes = response.data;
     });
 
     $scope.ingredients = [];
 
     $scope.addRecipe = function() {
+
+      var data = {
+          name: $scope.recipe.name,
+          ingredients: $scope.ingredients
+        };
+
+      $http.post("/addRecipe", data).success(function(data, status) {
+        console.log("posted successfully")
+        // console.log(data);
+      })
+
       $scope.recipes.push({
         name: $scope.recipe.name,
         ingredients: $scope.ingredients
